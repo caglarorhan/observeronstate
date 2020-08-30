@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>directly sync</title>
+    <style>
+        #cartTotal{
+            border:1px solid red;
+            width:80px;
+            height: 50px;
+            top:1px;
+            right:1px;
+            position: fixed;
+            font-size: 40px;
+            color:red;
+            text-align: right;
+        }
+    </style>
+
+    <script src="../js/observeronstate.js"></script>
+    <script type="text/javascript">
+        const state = {shoppingCart: {
+            bread:{count:5, itemPrice:1},
+            coke:{count:6, itemPrice:4}
+        }
+        }
+
+
+
+        window.addEventListener('load',()=>{
+            observerOnState(state);
+            state.shoppingCart.subscribeMe('totalCheckoutPrice');
+            cartList();
+
+        })
+
+
+        function co(id){
+            return document.getElementById(id);
+        }
+
+
+        function cartList(){
+            let list = '';
+            Object.entries(state.shoppingCart.tmp).forEach(
+                ([k,v])=>{
+                    co('cart').innerHTML+=`<div>${k} -> <input type="number" value="${v.count}"/ea ${v.itemPrice}></div>`;
+                }
+                )
+        }
+
+    </script>
+</head>
+<body>
+<div id="cartTotal">000</div>
+<div id="cart">
+
+</div>
+</body>
+</html>

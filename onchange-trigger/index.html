@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>onchange-trigger</title>
+    <script src="../js/observeronstate.js"></script>
+    <script type="text/javascript">
+        const state = {userInfo: {name: 'John', age:0}}
+
+window.addEventListener('load',()=>{
+    observerOnState(state);
+    state.userInfo.subscribeMe('nameChanged');
+
+
+
+
+})
+
+
+        function co(id){
+            return document.getElementById(id);
+        }
+
+        function nameChanged(v){
+            const {name='John Doe',age=0} = v;
+            co('userInfo').textContent=`The user name is updated as name : ${name} and age ${age}.`;
+        }
+
+        function changed(){
+            state.userInfo.tmp={name: co('name').value, age:co('age').value}
+        }
+
+    </script>
+</head>
+<body>
+<label for="name">Name:</label>
+<input type="text" id="name" onkeyup="changed()">
+<label for="age">Age:</label>
+<input type="number" id="age" onkeyup="changed()">
+<div id="userInfo"></div>
+</body>
+</html>

@@ -12,8 +12,11 @@ function observerOnState(targetObject){
                 }
             }
             Object.defineProperty(value, 'tmp',{
-                get(){
+                get(v){
                     console.log(this);
+                    let tempObj = JSON.parse(JSON.stringify(this));
+                    delete tempObj.subsList;
+                    return tempObj;
                 },
                 set(v){
                     if(value.subsList){
